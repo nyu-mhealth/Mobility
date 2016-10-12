@@ -1,6 +1,6 @@
 Package: Mobility
 Title: Tools for Understanding Mobility Data
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: person("Hong", "Gao", email = "honggao@nyu.edu", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
 Depends:
