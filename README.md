@@ -29,7 +29,7 @@ In physics, [Radius of gyration](https://en.wikipedia.org/wiki/Radius_of_gyratio
 
 #### Stayevents
 
-With continuous mobility or trip data, it is important to identify stays to link to built-in environment and social behaviors. The algorithm for identifying stay events involves 2 steps. First, distance between two sequential points *P<sub>n</sub>* and *P<sub>n+1</sub>* is calculated and compared to a preset threshold. If the distance is smaller than the threshold, both points are put in a stay event candidate set. Then the distance between *P<sub>n+1</sub>* and *P<sub>n+2</sub>* is calculated to identify more points in the candidate set. Second, when the distance becomes larger than the threshold, the time difference between the first point in the candidate set, *P<sub>n</sub>*, and the last point, *P<sub>n+m</sub>*, is calculated. If the time difference is larger than a time threhold, the centroid of all the points in candidate set is taken as the stay event's location. During the process, if the distance and time exceeds thresholds, points in candidate set are reset. 
+With continuous mobility or trip data, it is important to identify stays to link to built-in environment and social behaviors. The algorithm for identifying stay events involves 2 steps[[2]](https://github.com/nyu-mhealth/Mobility/blob/master/README.md#reference). First, distance between two sequential points *P<sub>n</sub>* and *P<sub>n+1</sub>* is calculated and compared to a preset threshold. If the distance is smaller than the threshold, both points are put in a stay event candidate set. Then the distance between *P<sub>n+1</sub>* and *P<sub>n+2</sub>* is calculated to identify more points in the candidate set. Second, when the distance becomes larger than the threshold, the time difference between the first point in the candidate set, *P<sub>n</sub>*, and the last point, *P<sub>n+m</sub>*, is calculated. If the time difference is larger than a time threhold, the centroid of all the points in candidate set is taken as the stay event's location. During the process, if the distance and time exceeds thresholds, points in candidate set are reset. 
 
 
 *More functions will be added as we expand our methods.*
@@ -38,3 +38,5 @@ With continuous mobility or trip data, it is important to identify stays to link
 #### Reference: 
 
 [1] González MC, Hidalgo CA, Barabási AL. 2008. Understanding individual human mobility patterns. *Nature* 453:779-782.
+
+[2] Toole JL, Colakb S, Sturt B. 2015. The path most traveled: Travel demand estimation using big data resources. *Transportation Research Part C: Emerging Technologies* Pages 162-177
