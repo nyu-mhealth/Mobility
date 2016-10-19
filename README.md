@@ -25,7 +25,7 @@ devtools::install_github("nyu-mhealth/Mobility")
 
 #### Radius of Gyration
 
-In physics, [Radius of gyration](https://en.wikipedia.org/wiki/Radius_of_gyration) measures the distribution of components in an object around an axis. It's been applied in urban science in recent years to study travel behaviors of human and animals. Here, radius of gyration (*rg*) was used to estimate the distance participants traveled in a certain time period[[1]](40).  *rg* is defined by the standard deviation between locations and their center of mass. 
+In physics, [Radius of gyration](https://en.wikipedia.org/wiki/Radius_of_gyration) measures the distribution of components in an object around an axis. It's been applied in urban science in recent years to study travel behaviors of human and animals. Here, radius of gyration (*rg*) was used to estimate the distance participants traveled in a certain time period[[1]](https://github.com/nyu-mhealth/Mobility/blob/master/README.md#reference).  *rg* is defined by the standard deviation between locations and their center of mass. 
 
 #### Stayevents
 
