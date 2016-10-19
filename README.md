@@ -35,6 +35,6 @@ With continuous mobility or trip data, it is important to identify stays to link
 *More functions will be added as we expand our methods.*
 
 ======
-**Reference:**
+#### Reference: 
 
 [1] González MC, Hidalgo CA, Barabási AL. 2008. Understanding individual human mobility patterns. *Nature* 453:779-782.
