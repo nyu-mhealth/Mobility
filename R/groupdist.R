@@ -75,7 +75,7 @@ groupdist<- function(df, coor = NULL, threshold = NULL, groupvar = NULL) {
   df2$disttestgroup<- ifelse(df2$dist2<= threshold, 1, 0)
 
   df2$distgroup<- seqgroup(df2, var = "disttestgroup")
-  df2$distgroup<- ifelse(df2$group==0, NA, df2$distgroup)
+  df2$distgroup<- ifelse(df2$disttestgroup==0, NA, df2$distgroup)
 
   suppressMessages(
     df2 <- slide(df2, Var = "distgroup", slideBy = -1)
