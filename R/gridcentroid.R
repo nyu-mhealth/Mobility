@@ -68,29 +68,3 @@ gridcentroid <- function(df, coor = NULL, cell.size = NULL,
   }
 }
 
-staycandidate$cand_idno<- seq(1:nrow(staycandidate))
-staycandidate2<- subset(staycandidate, select=c(i, mlat, mlon, cand_idno))
-
-staycandidate2<- staycandidate2[,c(3,2,1,4)]
-staypoint<- NULL
-staycandidate_grid<- NULL
-K<- max(staycandidate2$i)
-for (k in 1:K){
-  points <- staycandidate2[staycandidate2$i==k,]
-  if (nrow(points)!=0){
-    points<- SpatialPoints(points)
-    proj4string(points) <-  CRS("+proj=longlat +datum=WGS84")
-    a<- min(points$mlat)
-    b<- min(points$mlon)
-    grid<- GridTopology(cellcentre.offset= c(b,a), cellsize = c(0.0254,0.0254), cells.dim = c(1000,1000))
-    sg<- SpatialGrid(grid) # 2km grid cell size
-    poly<- as.SpatialPolygons.GridTopology(grid)
-    proj4string(poly) <-  CRS("+proj=longlat +datum=WGS84")
-    result <- data.frame(points,grid=over(points,poly))
-    spk <- aggregate(cbind(mlat, mlon)~grid,data=result,mean)
-    spk$id<- k
-    staypoint<- rbind(staypoint, spk)
-    staycandidate_grid<- rbind(staycandidate_grid, result)
-  }
-}
-staypoint<- rename(staypoint, c(mlat="splat",mlon="splon"))
