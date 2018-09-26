@@ -7,21 +7,16 @@
 #'
 #' @param df a data frame object.
 #' @param coor longitude and latitude of the spatial points in the format of c("lon","lat").
-#' @param time a POSIXct time object, used to calculate time period.
-#' @param dist.threshold a distance threshold used to determine if points are in the same group. The
-#' format is numeric. Unit is meters.
-#' @param time.threshold a numeric object. Value should have the same unit specified in the \code{time.units}
-#' parameter.
-#' @param time.units a character string indicating which units time difference is caluclated in.
-#' @param groupvar grouping object to stratify time objects. Recommend to be ID for each individual.
-#' If \code{groupvar} is not specified, \code{time.units} will be used to sort data and calculate radius of gyration.
+#' @param cell.size size of the the spatial grid to overlay with spatial points. 
+#' @param cell.units unit of the cell size length. It has to be meters. 
+#' @param point.id id of the input spatial points. 
+#' 
+#' @return a data frame with three new columns added showing stay points and locations.
 #'
-#' @return a data frame with three new columns added showing stayevents and locations.
+#' @note \code{gridcentroid} function can be slow if the spatial points are scattered in a large area and grid size is 
+#' small. It is recommended to run in small batches. 
 #'
-#' @note \code{stayevent} function doesn't sort the data frame. It is recommended to sort data frame based on
-#' time and then run the function.
-#'
-#' @seealso \code{\link{groupdist}},\code{\link{grouptime}},\code{\link{seqgroup}}
+#' @seealso \code{\link{stayevents}}
 #'
 #' @references Toole, J.L., et al. The path most traveled: Travel demand estimation using big data resources. Transport.
 #' Res. Part C (2015), \link{http://dx.doi.org/10.1016/j.trc.2015.04.022}
@@ -31,14 +26,15 @@
 #' mobility_stay<- stayevent(mobility, coor = c("lon","lat"), time = "datetime", dist.threshold = 100,
 #'                  time.threshold = 30, time.units = "mins", groupvar = "id")
 #'
-#' @importFrom sp SpatialPoints
+#' @import sp
 #'
 #' @export
 #'
 #'
 
 gridcentroid <- function(df, coor = NULL, cell.size = NULL,
-                      cell.units = "meters", point.id = NULL){
+                      cell.units = "meters", point.id = NULL,
+                      group.id = NULL){
   if (is.atomic(df)) {
     df <- data.frame(x = df)
   }
@@ -55,42 +51,48 @@ gridcentroid <- function(df, coor = NULL, cell.size = NULL,
     df$point.id <- seq(1, nrow(df))
     point.id <- "point.id"
   }
+  if (is.null(group.id)) {
+    group.id <- rep(1, nrow(df))
+    df <- cbind(df, group.id)
+    message("group.id is not specified, treating all the data as one group.")
+  }
 
-  grid.points <- df[c(coor, point.id)]
+  grid.points <- df[c(coor, point.id, group.id)]
+  grid.points <- unique(grid.points)
+  grid.points[c(coor, point.id, group.id)] = apply(grid.points[c(coor, point.id, group.id)], 2, 
+                                         function(x) as.numeric(as.character(x)))
 
   if (nrow(grid.points) == 1){
-    staypoint.id <- 1
+    staypoint.id <- as.numeric(paste0(df[point.id], "_1"))
     staypointlon <- df[1, coor[1]]
     staypointlat <- df[1, coor[2]]
     df <- cbind(df, staypoint.id, staypointlon, staypointlat)
   } else {
-    points <- SpatialPoints(grid.points)
-  }
-}
-
-staycandidate$cand_idno<- seq(1:nrow(staycandidate))
-staycandidate2<- subset(staycandidate, select=c(i, mlat, mlon, cand_idno))
-
-staycandidate2<- staycandidate2[,c(3,2,1,4)]
-staypoint<- NULL
-staycandidate_grid<- NULL
-K<- max(staycandidate2$i)
-for (k in 1:K){
-  points <- staycandidate2[staycandidate2$i==k,]
-  if (nrow(points)!=0){
-    points<- SpatialPoints(points)
-    proj4string(points) <-  CRS("+proj=longlat +datum=WGS84")
-    a<- min(points$mlat)
-    b<- min(points$mlon)
-    grid<- GridTopology(cellcentre.offset= c(b,a), cellsize = c(0.0254,0.0254), cells.dim = c(1000,1000))
-    sg<- SpatialGrid(grid) # 2km grid cell size
+    # create a spatial grid
+    a <- min(grid.points[, coor[1]])
+    b <- min(grid.points[, coor[2]])
+    cellsize <- 0.0001 / 7.871 * cell.size
+    c <- ceiling((max(grid.points[, coor[1]]) - a) / cellsize)
+    d <- ceiling((max(grid.points[, coor[2]]) - b) / cellsize)
+    cellsdim <- max(c, d)
+    grid<- GridTopology(cellcentre.offset= c(a, b),
+                        cellsize = c(cellsize, cellsize),
+                        cells.dim = c(cellsdim, cellsdim))
+    sg<- SpatialGrid(grid)
     poly<- as.SpatialPolygons.GridTopology(grid)
     proj4string(poly) <-  CRS("+proj=longlat +datum=WGS84")
+    # join points to grid and get centroid
+    points <- SpatialPoints(grid.points)
+    proj4string(points) <-  CRS("+proj=longlat +datum=WGS84")
     result <- data.frame(points,grid=over(points,poly))
-    spk <- aggregate(cbind(mlat, mlon)~grid,data=result,mean)
-    spk$id<- k
-    staypoint<- rbind(staypoint, spk)
-    staycandidate_grid<- rbind(staycandidate_grid, result)
+    spk <- aggregate(cbind(result[, 1], result[, 2])~get(group.id)+grid, data=result, mean)
+    names(spk) <- c(group.id, "grid", "splon", "splat")
+    spk$staypoint.id <- 1:nrow(spk)
+    spk$staypoint.id <- paste0(spk$grid, "_", spk$staypoint.id)
+    result <- merge(result, spk, by=c(group.id, "grid"))
+    result <- result[ , -which(names(result) %in% coor)]
+    df <- merge(df, result, by=c(group.id, point.id))
   }
+  return(df)
 }
-staypoint<- rename(staypoint, c(mlat="splat",mlon="splon"))
+

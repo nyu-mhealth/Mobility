@@ -73,9 +73,10 @@ groupdist<- function(df, coor = NULL, threshold = NULL, groupvar = NULL) {
   dist2<- distVincentyEllipsoid(latlon, latlonlag2, a=6378137, b=6356752.3142, f=1/298.257223563)
   df2<- cbind(df2, dist2)
   df2$disttestgroup<- ifelse(df2$dist2<= threshold, 1, 0)
+  df2$disttestgroup<- ifelse(is.na(df2$disttestgroup), 2, df2$disttestgroup)
 
   df2$distgroup<- seqgroup(df2, var = "disttestgroup")
-  df2$distgroup<- ifelse(df2$disttestgroup==0, NA, df2$distgroup)
+  df2$distgroup<- ifelse(df2$disttestgroup!=1, NA, df2$distgroup)
 
   suppressMessages(
     df2 <- slide(df2, Var = "distgroup", slideBy = -1)
