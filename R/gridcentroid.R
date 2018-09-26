@@ -7,14 +7,14 @@
 #'
 #' @param df a data frame object.
 #' @param coor longitude and latitude of the spatial points in the format of c("lon","lat").
-#' @param cell.size size of the the spatial grid to overlay with spatial points. 
-#' @param cell.units unit of the cell size length. It has to be meters. 
-#' @param point.id id of the input spatial points. 
-#' 
+#' @param cell.size size of the the spatial grid to overlay with spatial points.
+#' @param cell.units unit of the cell size length. It has to be meters.
+#' @param point.id id of the input spatial points.
+#'
 #' @return a data frame with three new columns added showing stay points and locations.
 #'
-#' @note \code{gridcentroid} function can be slow if the spatial points are scattered in a large area and grid size is 
-#' small. It is recommended to run in small batches. 
+#' @note \code{gridcentroid} function can be slow if the spatial points are scattered in a large area and grid size is
+#' small. It is recommended to run in small batches.
 #'
 #' @seealso \code{\link{stayevents}}
 #'
@@ -59,7 +59,7 @@ gridcentroid <- function(df, coor = NULL, cell.size = NULL,
 
   grid.points <- df[c(coor, point.id, group.id)]
   grid.points <- unique(grid.points)
-  grid.points[c(coor, point.id, group.id)] = apply(grid.points[c(coor, point.id, group.id)], 2, 
+  grid.points[c(coor, point.id, group.id)] = apply(grid.points[c(coor, point.id, group.id)], 2,
                                          function(x) as.numeric(as.character(x)))
 
   if (nrow(grid.points) == 1){
@@ -94,5 +94,6 @@ gridcentroid <- function(df, coor = NULL, cell.size = NULL,
     df <- merge(df, result, by=c(group.id, point.id))
   }
   return(df)
-}
+  }
+
 
