@@ -30,7 +30,7 @@ sdspatialpoints<- function(df, coor = NULL, ...){
   }
 
   if (!is.null(coor)) {
-    meancoor<- c(mean(df[,"lon"]),mean(df[,"lat"]))
+    meancoor<- c(mean(df[,coor[1]]),mean(df[,coor[2]]))
     latlon<- cbind(df[,coor])
     latlon$dist<- distVincentyEllipsoid(latlon, meancoor, a=6378137, b=6356752.3142, f=1/298.257223563)
     latlon$dist2<- latlon$dist^2
