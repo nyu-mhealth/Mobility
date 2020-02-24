@@ -64,7 +64,7 @@ radiusofgyration<- function(df, coor = NULL, time = NULL, time.units = c("hour",
   }
 
   df3<- ddply(df2, .(group), function(z){
-    data.frame(rg = sdspatialpoints(z, coor = c("lon","lat")))
+    data.frame(rg = sdspatialpoints(z, coor = coor))
   })
   df2<- merge(df2, df3, by="group")
   return(df2$rg)
