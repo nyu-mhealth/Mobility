@@ -26,4 +26,6 @@ A<- data.frame(A)
 A$group<- seqgroup(A, var = "A")
 
 }
-
+\seealso{
+\code{\link{slide}}
+}

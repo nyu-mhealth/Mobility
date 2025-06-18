@@ -27,4 +27,3 @@ lonlat<- data.frame(lon, lat)
 sdspatialpoints(lonlat, coor = c("lon","lat"))
 
 }
-
