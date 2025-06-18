@@ -4,8 +4,13 @@
 \alias{radiusofgyration}
 \title{Calculate Radius of Gyration of Spatial Points}
 \usage{
-radiusofgyration(df, coor = NULL, time = NULL, time.units = c("hour",
-  "date", "month"), groupvar = NULL)
+radiusofgyration(
+  df,
+  coor = NULL,
+  time = NULL,
+  time.units = c("hour", "date", "month"),
+  groupvar = NULL
+)
 }
 \arguments{
 \item{df}{a data frame object.}
@@ -36,4 +41,3 @@ mobility$rg<- radiusofgyration(mobility, coor = c("lon","lat"), time = "datetime
 \seealso{
 \code{\link{sdspatialpoints}}
 }
-

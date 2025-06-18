@@ -4,13 +4,15 @@
 \name{mobility}
 \alias{mobility}
 \title{Mobility Sample Dataset}
-\format{A data frame with 3720 rows and 4 variables:
+\format{
+A data frame with 3720 rows and 4 variables:
 \describe{
   \item{id}{unique identifier of people}
   \item{lon}{longitude of location}
   \item{lat}{latitude of location}
   \item{datetime}{a POSIXct time object of when people are at certain locations}
-}}
+}
+}
 \usage{
 mobility
 }
@@ -18,4 +20,3 @@ mobility
 A dataset contains hypothetical mobility data of two people.
 }
 \keyword{datasets}
-

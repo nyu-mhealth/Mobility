@@ -4,8 +4,13 @@
 \alias{grouptime}
 \title{Group by Time Threshold}
 \usage{
-grouptime(df, time = NULL, units = c("auto", "secs", "mins", "hours",
-  "days", "weeks"), threshold = NULL, groupvar = NULL)
+grouptime(
+  df,
+  time = NULL,
+  units = c("auto", "secs", "mins", "hours", "days", "weeks"),
+  threshold = NULL,
+  groupvar = NULL
+)
 }
 \arguments{
 \item{df}{a data frame object.}
@@ -31,4 +36,3 @@ is longer than time threshold, rows are put in the same group. Otherwise, group 
 \seealso{
 \code{\link{seqgroup}}
 }
-

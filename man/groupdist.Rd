@@ -33,6 +33,5 @@ mobility$distgroup<- groupdist(mobility, coor = c("lon", "lat"), threshold = 100
 
 }
 \seealso{
-\code{\link{seqgroup}}
+\code{\link{seqgroup}}, \code{\link{slide}}
 }
-

@@ -29,4 +29,6 @@ mobility_stay<- aggregate(cbind(id, stayeventlon, stayeventlat)~stayeventgroup, 
 mobility_stay$dispm<- displacement(mobility_stay, coor = c("stayeventlon","stayeventlat"), groupvar = "id")
 
 }
-
+\seealso{
+\code{\link{slide}}
+}
