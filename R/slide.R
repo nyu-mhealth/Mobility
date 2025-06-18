@@ -61,7 +61,7 @@
 #' between rows should be constant, e.g. days, months, years, and without missing
 #' values.
 #'
-#' @seealso \code{\link{shift}}, \code{\link{dplyr}}
+#' @seealso \code{\link{shift}}, \code{\link{dplyr}}, \code{\link{utils}},
 #'
 #' @source Partially based on TszKin Julians \code{shift} function:
 #' \url{http://ctszkin.com/2012/03/11/generating-a-laglead-variables/}
