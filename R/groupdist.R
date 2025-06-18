@@ -15,15 +15,14 @@
 #' @return a list of numbers and NAs indicating whether a set of spatial points are in the same group
 #' or not in any groups.
 #'
-#' @seealso \code{\link{seqgroup}}
+#' @seealso \code{\link{seqgroup}}, \code{\link{slide}}
 #'
 #' @examples
 #' data(mobility)
 #' mobility$distgroup<- groupdist(mobility, coor = c("lon", "lat"), threshold = 100, groupvar = "id")
 #'
-#' @import plyr
+#' @import dplyr
 #' @importFrom geosphere distVincentyEllipsoid
-#' @importFrom DataCombine slide
 #'
 #' @export
 
