@@ -1,14 +1,15 @@
 Package: Mobility
 Title: Tools for Understanding Mobility Data
 Version: 1.0.0.9000
-Authors@R: person("Hong", "Gao", email = "honggao@nyu.edu", role = c("aut", "cre"))
+Authors@R: 
+  person("Hong", "Gao", email = "honggao@nyu.edu", role = c("aut", "cre")),
+  person("Emily", "Zhou", email = "emzhou@upenn.edu", role = "ctb")
 Description: An easy and fast tool to understand and work with mobility data.
 URL: https://github.com/nyu-mhealth/Mobility
 BugReports: https://github.com/nyu-mhealth/Mobility/issues
 Depends:
     R (>= 3.3.0)
 Imports:
-    DataCombine (>= 0.2.21),
     geosphere (>= 1.5-1),
     lubridate (>= 1.5.6),
     plyr (>= 1.8.4),
@@ -16,4 +17,4 @@ Imports:
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 5.0.1.9000
+RoxygenNote: 7.3.1
