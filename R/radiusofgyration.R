@@ -21,7 +21,7 @@
 #' mobility$rg<- radiusofgyration(mobility, coor = c("lon","lat"), time = "datetime", time.units = "date", groupvar = "id")
 #'
 #' @import lubridate
-#' @import plyr
+#' @import dplyr
 #' @importFrom geosphere distVincentyEllipsoid
 #'
 #' @export
@@ -63,9 +63,15 @@ radiusofgyration<- function(df, coor = NULL, time = NULL, time.units = c("hour",
     df2$group<- seqgroup(df2, var = "newid")
   }
 
-  df3<- ddply(df2, .(group), function(z){
-    data.frame(rg = sdspatialpoints(z, coor = coor))
-  })
+# deprecated code using plyr
+#  df3<- ddply(df2, .(group), function(z){
+#    data.frame(rg = sdspatialpoints(z, coor = coor))
+#  })
+
+  df3 <- df2 %>%
+    group_by(group) %>%
+    group_modify(~ data.frame(rg = sdspatialpoints(.x, coor = coor)))
+
   df2<- merge(df2, df3, by="group")
   return(df2$rg)
 }
