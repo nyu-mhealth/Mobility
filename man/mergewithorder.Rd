@@ -32,4 +32,3 @@ mobility<- mergewithorder(mobility, latmean, by = "distgroup")
 \seealso{
 \code{\link{merge}}
 }
-

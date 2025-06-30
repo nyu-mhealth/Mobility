@@ -17,7 +17,7 @@
 #' @seealso \code{\link{seqgroup}}
 #'
 #' @import lubridate
-#' @import plyr
+#' @import dplyr
 #'
 #' @export
 
@@ -42,9 +42,14 @@ grouptime<- function(df, time = NULL, units = c("auto", "secs", "mins", "hours",
   }
 
   if (!is.null(groupvar)){
-    df3<- ddply(df, .(get(groupvar)), function(z){
-      data.frame(timediff = as.numeric(difftime(z[nrow(z),time], z[1,time]), units = units))
-    })
+    # deprecated ddply code
+    #df3<- ddply(df, .(get(groupvar)), function(z){
+      #data.frame(timediff = as.numeric(difftime(z[nrow(z),time], z[1,time]), units = units))
+    #})
+    df3 <- df %>%
+      group_by(!!sym(groupvar)) %>%
+      summarize(timediff = as.numeric(difftime(last(!!sym(time)), first(!!sym(time)), units = "min")))
+
     df3$timegroup<- ifelse(df3$timediff>=threshold, 1, 0)
     names(df3)<- c(groupvar, "timediff","timegroup")
     df3<- subset(df3, !is.na(get(groupvar)))

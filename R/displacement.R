@@ -10,6 +10,8 @@
 #'
 #' @return a list of distance values. Unit is meters.
 #'
+#' @seealso \code{\link{slide}}
+#'
 #' @examples
 #' data(mobility)
 #' mobility_stay<- stayevent(mobility, coor = c("lon","lat"), time = "datetime", dist.threshold = 100,
@@ -18,7 +20,6 @@
 #' mobility_stay$dispm<- displacement(mobility_stay, coor = c("stayeventlon","stayeventlat"), groupvar = "id")
 #'
 #' @importFrom geosphere distVincentyEllipsoid
-#' @importFrom DataCombine slide
 #'
 #' @export
 

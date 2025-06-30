@@ -4,9 +4,16 @@
 \alias{stayevent}
 \title{Calculate Stay Events}
 \usage{
-stayevent(df, coor = NULL, time = NULL, dist.threshold = NULL,
-  time.threshold = NULL, time.units = c("auto", "secs", "mins", "hours",
-  "days", "weeks"), groupvar = NULL, ...)
+stayevent(
+  df,
+  coor = NULL,
+  time = NULL,
+  dist.threshold = NULL,
+  time.threshold = NULL,
+  time.units = c("auto", "secs", "mins", "hours", "days", "weeks"),
+  groupvar = NULL,
+  ...
+)
 }
 \arguments{
 \item{df}{a data frame object.}
@@ -51,4 +58,3 @@ Res. Part C (2015), \link{http://dx.doi.org/10.1016/j.trc.2015.04.022}
 \seealso{
 \code{\link{groupdist}},\code{\link{grouptime}},\code{\link{seqgroup}}
 }
-

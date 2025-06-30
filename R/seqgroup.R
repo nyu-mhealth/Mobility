@@ -10,12 +10,13 @@
 #'
 #' @return a numeric list of group numbers
 #'
+#' @seealso \code{\link{slide}}
+#'
 #' @examples
 #' A<- rep(1:3, times = 2, each = 2)
 #' A<- data.frame(A)
 #' A$group<- seqgroup(A, var = "A")
 #'
-#' @importFrom DataCombine slide
 #' @importFrom zoo na.locf
 #'
 #' @export
